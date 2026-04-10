@@ -1,0 +1,24 @@
+services:
+  slurmctld:
+    build: .
+    container_name: slurmctld
+    hostname: slurmctld
+    command: slurmctld
+    volumes:
+      - ./slurm.conf:/etc/slurm/slurm.conf
+
+  node01:
+    build: .
+    container_name: node01
+    hostname: node01
+    command: slurmd
+    volumes:
+      - ./slurm.conf:/etc/slurm/slurm.conf
+
+  node02:
+    build: .
+    container_name: node02
+    hostname: node02
+    command: slurmd
+    volumes:
+      - ./slurm.conf:/etc/slurm/slurm.conf
