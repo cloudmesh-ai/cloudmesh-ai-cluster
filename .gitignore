@@ -1,3 +1,5 @@
+.python-version
+.aider*
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
@@ -214,3 +216,6 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+.release_state.json
+release_*.log
+.DS_Store

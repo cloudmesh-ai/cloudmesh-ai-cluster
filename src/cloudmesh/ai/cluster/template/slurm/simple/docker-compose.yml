@@ -1,0 +1,24 @@
+services:
+  slurmctld:
+    build: .
+    container_name: slurmctld
+    hostname: slurmctld
+    command: slurmctld
+    volumes:
+      - ./config/slurm.conf:/etc/slurm/slurm.conf
+    networks:
+      - slurmnet
+
+  node:
+    build: .
+    command: slurmd
+    volumes:
+      - ./config/slurm.conf:/etc/slurm/slurm.conf
+    networks:
+      - slurmnet
+    depends_on:
+      - slurmctld
+
+networks:
+  slurmnet:
+    driver: bridge
