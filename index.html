@@ -595,35 +595,33 @@
 <h2 id="quick-start">Quick Start</h2>
 <p>Get your cluster up and running in minutes:</p>
 <ol>
-<li>
-<p><strong>Explore available profiles</strong>:
-   <code>bash
+<li><strong>Explore available profiles</strong>:</li>
+</ol>
+<p><code>bash
    cmc cluster init list</code></p>
-</li>
-<li>
-<p><strong>Initialize the cluster</strong>:
-   You can use a profile name as the cluster name to apply specific configurations (e.g., <code>preemptive</code>).
-   <code>bash
-   cmc cluster init my-cluster N=3
+<ol>
+<li><strong>Initialize the cluster</strong>:
+   You can use a profile name as the cluster name to apply specific configurations (e.g., <code>preemptive</code>).</li>
+</ol>
+<p><code>bash
+   cmc cluster init simple N=3
    # OR use a specific profile:
    cmc cluster init preemptive N=3</code></p>
-</li>
-<li>
-<p><strong>Start the containers</strong>:
-   <code>bash
-   cmc cluster start my-cluster</code></p>
-</li>
-<li>
-<p><strong>Verify health</strong>:
-   <code>bash
-   cmc cluster status my-cluster</code></p>
-</li>
-<li>
-<p><strong>Run a smoke test</strong>:
-   <code>bash
-   cmc cluster test my-cluster</code></p>
-</li>
+<ol>
+<li><strong>Start the containers</strong>:</li>
 </ol>
+<p><code>bash
+   cmc cluster start</code></p>
+<ol>
+<li><strong>Verify health</strong>:</li>
+</ol>
+<p><code>bash
+   cmc cluster status</code></p>
+<ol>
+<li><strong>Run a smoke test</strong>:</li>
+</ol>
+<p><code>bash
+   cmc cluster test</code></p>
 <p>For more detailed information, please see the <a href="architecture.html">Architecture</a> and <a href="usage.html">Usage Guide</a>.</p>
 
 

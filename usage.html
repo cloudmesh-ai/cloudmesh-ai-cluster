@@ -964,21 +964,19 @@ Before initializing, you can list the available cluster configurations:</p>
 </code></pre>
 <p><strong>Basic Initialization:</strong>
 Initialize a cluster using the default <code>simple</code> profile:</p>
-<pre><code class="language-bash">cmc cluster init my-cluster
+<pre><code class="language-bash">cmc cluster init simple
 </code></pre>
 <p><strong>Profile-Based Initialization:</strong>
-Initialize a cluster using a specific profile (e.g., <code>preemptive</code>) by using its name as the cluster name or using the <code>-c</code> flag:</p>
+Initialize a cluster using a specific profile (e.g., <code>preemptive</code>) by using its name as the cluster name.</p>
 <pre><code class="language-bash">cmc cluster init preemptive
-# OR
-cmc cluster init my-cluster -c preemptive
 </code></pre>
 <p><strong>Advanced Initialization with Scaling and Variables:</strong>
 You can pass variables (e.g., node count <code>N</code>) directly to the command. These variables are used to generate the <code>slurm.conf</code> from a template.</p>
-<pre><code class="language-bash">cmc cluster init preemptive N=3 A=hallo
+<pre><code class="language-bash">cmc cluster init preemptive N=3
 </code></pre>
 <h3 id="launching-the-cluster">Launching the Cluster</h3>
 <p>Bring the cluster online:</p>
-<pre><code class="language-bash">cmc cluster start simple
+<pre><code class="language-bash">cmc cluster start
 </code></pre>
 <p><em>(If you omit the cluster name, it uses the current directory's configuration).</em></p>
 <h3 id="verifying-system-health">Verifying System Health</h3>
@@ -1098,22 +1096,20 @@ You can pass variables (e.g., node count <code>N</code>) directly to the command
 <h3 id="job-lifecycle">Job Lifecycle</h3>
 <p>Use <code>cmc cluster login</code> to enter the controller node.</p>
 <ol>
-<li>
-<p><strong>Submit a Job</strong>:
-   <code>bash
-   sbatch test_job.sh</code></p>
-</li>
-<li>
-<p><strong>Monitor Jobs</strong>:
-   <code>bash
-   squeue</code></p>
-</li>
-<li>
-<p><strong>Cancel Jobs</strong>:
-   <code>bash
-   scancel &lt;job_id&gt;</code></p>
-</li>
+<li><strong>Submit a Job</strong>:</li>
 </ol>
+<p><code>bash
+   sbatch test_job.sh</code></p>
+<ol>
+<li><strong>Monitor Jobs</strong>:</li>
+</ol>
+<p><code>bash
+   squeue</code></p>
+<ol>
+<li><strong>Cancel Jobs</strong>:</li>
+</ol>
+<p><code>bash
+   scancel &lt;job_id&gt;</code></p>
 <h3 id="scaling-the-cluster">Scaling the Cluster</h3>
 <p>Scaling is now handled during initialization. Pass the <code>N</code> variable to specify the number of worker nodes:</p>
 <pre><code class="language-bash">cmc cluster init simple N=5
