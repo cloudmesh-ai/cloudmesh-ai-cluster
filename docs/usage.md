@@ -12,39 +12,46 @@ The `cmc cluster init` command prepares your environment. It supports dynamic pr
 
 **Exploring Profiles:**
 Before initializing, you can list the available cluster configurations:
+
 ```bash
 cmc cluster init list
 ```
 
 **Basic Initialization:**
 Initialize a cluster using the default `simple` profile:
+
 ```bash
-cmc cluster init my-cluster
+cmc cluster init simple
 ```
 
 **Profile-Based Initialization:**
-Initialize a cluster using a specific profile (e.g., `preemptive`) by using its name as the cluster name or using the `-c` flag:
+Initialize a cluster using a specific profile (e.g., `preemptive`) by using its name as the cluster name.
+
 ```bash
 cmc cluster init preemptive
-# OR
-cmc cluster init my-cluster -c preemptive
 ```
 
 **Advanced Initialization with Scaling and Variables:**
 You can pass variables (e.g., node count `N`) directly to the command. These variables are used to generate the `slurm.conf` from a template.
+
 ```bash
-cmc cluster init preemptive N=3 A=hallo
+cmc cluster init preemptive N=3
 ```
 
 ### Launching the Cluster
+
 Bring the cluster online:
+
 ```bash
-cmc cluster start simple
+cmc cluster start
 ```
+
 *(If you omit the cluster name, it uses the current directory's configuration).*
 
 ### Verifying System Health
+
 Ensure all compute nodes are active and the Slurm scheduler is responsive:
+
 ```bash
 cmc cluster status simple
 ```
@@ -99,26 +106,32 @@ This means that any script you add to the cluster root (e.g., `test_job.sh`) is 
 Use `cmc cluster login` to enter the controller node.
 
 1. **Submit a Job**:
+
    ```bash
    sbatch test_job.sh
    ```
 
 2. **Monitor Jobs**:
+
    ```bash
    squeue
    ```
 
 3. **Cancel Jobs**:
+
    ```bash
    scancel <job_id>
    ```
 
 ### Scaling the Cluster
+
 Scaling is now handled during initialization. Pass the `N` variable to specify the number of worker nodes:
+
 ```bash
 cmc cluster init simple N=5
 cmc cluster start simple
 ```
+
 The tool automatically configures `SLURM_NODES` in the `.env` file and applies `--scale node=N` during startup.
 
 ---
