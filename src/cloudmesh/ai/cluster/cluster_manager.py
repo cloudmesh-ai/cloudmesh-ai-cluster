@@ -57,7 +57,7 @@ class ClusterManager:
             print(json.dumps(error_payload, indent=2))
             sys.exit(e.returncode or 1)
 
-    def up(self) -> None:
+    def start(self) -> None:
         """
         Bring up the cluster and resume nodes.
         """
@@ -69,7 +69,7 @@ class ClusterManager:
         
         self._run_command(self.compose_cmd + ['ps'])
 
-    def down(self) -> None:
+    def stop(self) -> None:
         """
         Stop the cluster containers.
         """
@@ -83,7 +83,7 @@ class ClusterManager:
         result = self._run_command(self.exec_ctl + ['sinfo'], capture_output=True)
         print(result.stdout)
 
-    def shell(self) -> None:
+    def login(self) -> None:
         """
         Open an interactive bash shell in the slurmctld container.
         """

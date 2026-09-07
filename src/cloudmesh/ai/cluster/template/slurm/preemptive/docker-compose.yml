@@ -6,6 +6,8 @@ services:
     command: slurmctld
     volumes:
       - ./config/slurm.conf:/etc/slurm/slurm.conf
+      - .:/home/slurm
+    working_dir: /home/slurm
     networks:
       - slurmnet
 
@@ -14,6 +16,8 @@ services:
     command: slurmd
     volumes:
       - ./config/slurm.conf:/etc/slurm/slurm.conf
+      - .:/home/slurm
+    working_dir: /home/slurm
     networks:
       - slurmnet
     depends_on:

@@ -1,0 +1,35 @@
+# ----------------------------------------------------------------------------------
+# This is a simple slurm.conf template for a docker-compose based cluster.
+# It defines a single partition with a range of compute nodes.
+# you can adjust the number of nodes by changing the 'N' variable as parameter to
+# cmc cluster init preemtive N=3
+# right now its the same as simple
+# ----------------------------------------------------------------------------------
+
+ClusterName=docker_cluster
+SlurmctldHost=slurmctld
+AuthType=auth/munge
+
+# Hardware & Process Tracking Fixes
+SlurmdParameters=config_overrides
+ProctrackType=proctrack/pgid
+
+# Preemption Settings
+PreemptType=preempt/partition_prio
+PreemptMode=CANCEL
+
+# Node Definitions
+NodeName=node[1-{{N}}] NodeAddr=node[1-{{N}}] CPUs=1 State=UNKNOWN
+
+# Partition Definitions (Overlapping nodes with distinct PriorityTiers)
+PartitionName=high Nodes=node[1-{{N}}] Default=YES MaxTime=INFINITE State=UP PriorityTier=10
+PartitionName=low  Nodes=node[1-{{N}}] MaxTime=INFINITE State=UP PriorityTier=1
+
+# Operational Settings
+SlurmUser=slurm
+SlurmctldPidFile=/var/run/slurmctld.pid
+SlurmdPidFile=/var/run/slurmd.pid
+SlurmdSpoolDir=/var/spool/slurmd
+StateSaveLocation=/var/spool/slurmctld
+SlurmctldLogFile=/var/log/slurm/slurmctld.log
+SlurmdLogFile=/var/log/slurmd.log

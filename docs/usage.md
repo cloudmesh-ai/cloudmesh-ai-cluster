@@ -1,35 +1,4 @@
-# Local AI Slurm Cluster Documentation
-
-This project provides a comprehensive, containerized environment for deploying and managing a multi-node Slurm cluster on a single host using Docker. It is designed for testing High-Performance Computing (HPC) configurations, AI job scheduling, and automation scripts without requiring dedicated physical hardware.
-
-## Table of Contents
-- Architecture
-- Installation and Setup
-- Cluster Management Tool (cmc)
-- Operational Guide
-- Configuration Details
-- Directory Structure
-- Troubleshooting
-
----
-
-## Architecture
-
-The cluster utilizes a distributed architecture simulated through Docker containers to mimic a physical HPC environment.
-
-### Components
-- **Controller Node (slurmctld)**: Central manager for resource allocation, job queuing, and node monitoring.
-- **Compute Nodes (slurmd)**: Scalable worker containers that execute computational tasks.
-- **Munge**: Lightweight authentication service for verifying identity across the cluster.
-- **Docker Networking**: Dedicated bridge network for communication between controller and nodes.
-- **Persistence**: State is managed via Docker volumes to ensure job history persists across restarts.
-
-### Base Environment
-- **Operating System**: Ubuntu 24.04
-- **Scheduler**: Slurm Workload Manager
-- **Containerization**: Docker and Docker Compose
-
----
+# Usage Guide
 
 ## Installation and Setup
 
@@ -39,9 +8,7 @@ The cluster utilizes a distributed architecture simulated through Docker contain
 - Python 3.10+
 
 ### Initializing the Project
-The `cmc cluster init` command prepares your environment. It now supports dynamic variable replacement and centralized configuration.
-
-By default, cluster files are created in the current directory (`.`), but they can also be managed centrally in `~/.config/cloudmesh/clusters/`.
+The `cmc cluster init` command prepares your environment. It supports dynamic variable replacement and centralized configuration.
 
 **Basic Initialization:**
 ```bash
@@ -119,31 +86,6 @@ cmc cluster init simple N=5
 cmc cluster start simple
 ```
 The tool automatically configures `SLURM_NODES` in the `.env` file and applies `--scale node=N` during startup.
-
----
-
-## Configuration Details
-
-### Template-Based Configuration (`slurm.conf.in`)
-The cluster uses a template system for `slurm.conf`. Variables passed during `init` (e.g., `N=3`) are replaced in the template using the `{{ VARIABLE }}` or `{{VARIABLE}}` syntax.
-
-### Centralized Storage
-Configurations are stored by default in: `~/.config/cloudmesh/clusters/<cluster_name>/`. This allows you to manage multiple cluster profiles on one machine and switch between them simply by passing the name to `cmc` commands.
-
----
-
-## Directory Structure
-
-```text
-. (Cluster Root)
-├── .env                # Project name and scaling (SLURM_NODES)
-├── docker-compose.yml  # Service orchestration
-├── Dockerfile          # Build definition
-├── entrypoint.sh       # Setup script
-├── test_job.sh         # Smoke test batch script
-└── config/
-    └── slurm.conf      # Generated Slurm configuration
-```
 
 ---
 

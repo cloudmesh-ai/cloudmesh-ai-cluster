@@ -1,0 +1,53 @@
+docs_dir: docs
+extra_css:
+- css/custom.css
+nav:
+- Home: index.md
+- Documents:
+  - Architecture: architecture.md
+  - Usage: usage.md
+- API Reference: api.md
+- Source Code: https://github.com/cloudmesh-ai/cloudmesh-ai-cluster
+plugins:
+- cloudmesh-ai-theme
+- search
+- mkdocstrings:
+    handlers:
+      python:
+        options:
+          docstring_section_style: table
+          docstring_style: google
+          group_by_category: true
+          members: true
+          separate_signature: true
+          show_category_heading: true
+          show_root_full_path: true
+          show_source: true
+          show_submodules: true
+        paths:
+        - src
+site_name: Cloudmesh AI Cluster
+
+repo_url: https://github.com/cloudmesh-ai/cloudmesh-ai-cluster
+repo_name: cloudmesh-ai-cluster
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+
+theme:
+  name: material
+  features:
+    - content.code.copy
+    - content.code.annotate
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+
+use_directory_urls: false
