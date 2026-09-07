@@ -6,22 +6,30 @@ This project provides a comprehensive, containerized environment for deploying a
 
 Get your cluster up and running in minutes:
 
-1. **Initialize the cluster** (creates config in current directory):
+1. **Explore available profiles**:
    ```bash
-   cmc cluster init my-cluster N=3
+   cmc cluster init list
    ```
 
-2. **Start the containers**:
+2. **Initialize the cluster**:
+   You can use a profile name as the cluster name to apply specific configurations (e.g., `preemptive`).
+   ```bash
+   cmc cluster init my-cluster N=3
+   # OR use a specific profile:
+   cmc cluster init preemptive N=3
+   ```
+
+3. **Start the containers**:
    ```bash
    cmc cluster start my-cluster
    ```
 
-3. **Verify health**:
+4. **Verify health**:
    ```bash
    cmc cluster status my-cluster
    ```
 
-4. **Run a smoke test**:
+5. **Run a smoke test**:
    ```bash
    cmc cluster test my-cluster
    ```

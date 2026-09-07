@@ -1,160 +1,54 @@
-# Local AI Slurm Cluster Documentation
+# Cloudmesh AI Slurm Cluster
 
 This project provides a comprehensive, containerized environment for deploying and managing a multi-node Slurm cluster on a single host using Docker. It is designed for testing High-Performance Computing (HPC) configurations, AI job scheduling, and automation scripts without requiring dedicated physical hardware.
 
-## Table of Contents
-- Architecture
-- Installation and Setup
-- Cluster Management Tool (cmc)
-- Operational Guide
-- Configuration Details
-- Directory Structure
-- Troubleshooting
+## 🚀 Quick Start
 
----
+Get your cluster up and running in minutes:
 
-## Architecture
-
-The cluster utilizes a distributed architecture simulated through Docker containers to mimic a physical HPC environment.
-
-### Components
-- **Controller Node (slurmctld)**: Central manager for resource allocation, job queuing, and node monitoring.
-- **Compute Nodes (slurmd)**: Scalable worker containers that execute computational tasks.
-- **Munge**: Lightweight authentication service for verifying identity across the cluster.
-- **Docker Networking**: Dedicated bridge network for communication between controller and nodes.
-- **Persistence**: State is managed via Docker volumes to ensure job history persists across restarts.
-
-### Base Environment
-- **Operating System**: Ubuntu 24.04
-- **Scheduler**: Slurm Workload Manager
-- **Containerization**: Docker and Docker Compose
-
----
-
-## Installation and Setup
-
-### Prerequisites
-- Docker Engine (Latest Stable)
-- Docker Compose V2
-- Python 3.10+
-
-### Initializing the Project
-The `cmc cluster init` command prepares your environment. It now supports dynamic variable replacement and centralized configuration.
-
-By default, cluster files are created in the current directory (`.`), but they can also be managed centrally in `~/.config/cloudmesh/clusters/`.
-
-**Basic Initialization:**
-```bash
-cmc cluster init simple
-```
-
-**Advanced Initialization with Scaling and Variables:**
-You can pass variables (e.g., node count `N`) directly to the command. These variables are used to generate the `slurm.conf` from a template (`slurm.conf.in`).
-```bash
-cmc cluster init simple N=3 A=hallo
-```
-
-### Launching the Cluster
-Bring the cluster online:
-```bash
-cmc cluster start simple
-```
-*(If you omit the cluster name, it uses the current directory's configuration).*
-
-### Verifying System Health
-Ensure all compute nodes are active and the Slurm scheduler is responsive:
-```bash
-cmc cluster status simple
-```
-
----
-
-## Cluster Management Tool (cmc)
-
-The `cmc cluster` tool wraps Docker Compose to provide a simplified interface for cluster administration. Most commands accept an optional `<cluster_name>` to target a specific cluster configuration.
-
-### Command Reference
-
-| Command | Description | Usage Example |
-| :--- | :--- | :--- |
-| `init` | Initializes project files with variable support | `cmc cluster init simple N=3` |
-| `start` | Starts the controller and compute nodes | `cmc cluster start simple` |
-| `stop` | Stops all cluster containers | `cmc cluster stop simple` |
-| `status` | Queries Docker and Slurm (`sinfo`) for status | `cmc cluster status simple` |
-| `build` | Rebuilds the cluster Docker images | `cmc cluster build simple` |
-| `install` | Performs a clean wipe, rebuild, and restart | `cmc cluster install simple` |
-| `test` | Runs a real `sbatch` smoke test job | `cmc cluster test simple` |
-| `login` | Opens an interactive shell in the controller | `cmc cluster login simple` |
-| `reconfig` | Signals Slurm to reload its configuration | `cmc cluster reconfig simple` |
-| `logs` | Streams logs from all cluster components | `cmc cluster logs simple` |
-| `clean` | Wipes all volumes and resets cluster state | `cmc cluster clean simple` |
-| `check-munge` | Verifies the Munge handshake between nodes | `cmc cluster check-munge simple` |
-
----
-
-## Operational Guide
-
-### Job Lifecycle
-Use `cmc cluster login` to enter the controller node.
-
-1. **Submit a Job**:
+1. **Explore available profiles**:
    ```bash
-   sbatch test_job.sh
+   cmc cluster init list
    ```
 
-2. **Monitor Jobs**:
+2. **Initialize the cluster**:
+   You can use a profile name (like `preemptive`) as the cluster name to apply specific configurations.
    ```bash
-   squeue
+   cmc cluster init simple N=3
+   # OR
+   cmc cluster init preemptive N=3
    ```
 
-3. **Cancel Jobs**:
+3. **Start the containers**:
    ```bash
-   scancel <job_id>
+   cmc cluster start simple
    ```
 
-### Scaling the Cluster
-Scaling is now handled during initialization. Pass the `N` variable to specify the number of worker nodes:
-```bash
-cmc cluster init simple N=5
-cmc cluster start simple
-```
-The tool automatically configures `SLURM_NODES` in the `.env` file and applies `--scale node=N` during startup.
+4. **Verify health**:
+   ```bash
+   cmc cluster status simple
+   ```
 
----
+## 📚 Documentation
 
-## Configuration Details
+We use MkDocs for our full documentation. You can find detailed guides on:
 
-### Template-Based Configuration (`slurm.conf.in`)
-The cluster uses a template system for `slurm.conf`. Variables passed during `init` (e.g., `N=3`) are replaced in the template using the `{{ VARIABLE }}` or `{{VARIABLE}}` syntax.
+- [Architecture & Configuration](docs/architecture.md) - Learn about dynamic profiles and container mounts.
+- [Installation & Usage Guide](docs/usage.md) - Detailed command reference and operational guide.
+- [API Reference](docs/api.md) - Technical API documentation.
 
-### Centralized Storage
-Configurations are stored by default in: `~/.config/cloudmesh/clusters/<cluster_name>/`. This allows you to manage multiple cluster profiles on one machine and switch between them simply by passing the name to `cmc` commands.
+## 🛠 Management Tool (cmc)
 
----
+The `cmc cluster` tool provides a simplified interface for cluster administration.
 
-## Directory Structure
+| Command | Description |
+| :--- | :--- |
+| `init list` | List available cluster profiles |
+| `init` | Initializes project files with variable support |
+| `start` | Starts the controller and compute nodes |
+| `stop` | Stops all cluster containers |
+| `status` | Queries Docker and Slurm (`sinfo`) for status |
+| `test` | Runs a real `sbatch` smoke test job |
+| `login` | Opens an interactive shell in the controller |
 
-```text
-. (Cluster Root)
-├── .env                # Project name and scaling (SLURM_NODES)
-├── docker-compose.yml  # Service orchestration
-├── Dockerfile          # Build definition
-├── entrypoint.sh       # Setup script
-├── test_job.sh         # Smoke test batch script
-└── config/
-    └── slurm.conf      # Generated Slurm configuration
-```
-
----
-
-## Troubleshooting
-
-### Node State Issues
-If nodes appear as `down` or `unk` in `sinfo`:
-1. `cmc cluster login <name>`
-2. `scontrol update nodename=node[1-10] state=resume`
-
-### Munge Authentication Failures
-If you encounter credential errors:
-1. `cmc cluster clean <name>`
-2. `cmc cluster start <name>`
+For a full list of commands, see the [Usage Guide](docs/usage.md).

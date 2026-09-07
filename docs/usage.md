@@ -8,17 +8,32 @@
 - Python 3.10+
 
 ### Initializing the Project
-The `cmc cluster init` command prepares your environment. It supports dynamic variable replacement and centralized configuration.
+The `cmc cluster init` command prepares your environment. It supports dynamic profile resolution and variable replacement.
+
+**Exploring Profiles:**
+Before initializing, you can list the available cluster configurations:
+```bash
+cmc cluster init list
+```
 
 **Basic Initialization:**
+Initialize a cluster using the default `simple` profile:
 ```bash
-cmc cluster init simple
+cmc cluster init my-cluster
+```
+
+**Profile-Based Initialization:**
+Initialize a cluster using a specific profile (e.g., `preemptive`) by using its name as the cluster name or using the `-c` flag:
+```bash
+cmc cluster init preemptive
+# OR
+cmc cluster init my-cluster -c preemptive
 ```
 
 **Advanced Initialization with Scaling and Variables:**
-You can pass variables (e.g., node count `N`) directly to the command. These variables are used to generate the `slurm.conf` from a template (`slurm.conf.in`).
+You can pass variables (e.g., node count `N`) directly to the command. These variables are used to generate the `slurm.conf` from a template.
 ```bash
-cmc cluster init simple N=3 A=hallo
+cmc cluster init preemptive N=3 A=hallo
 ```
 
 ### Launching the Cluster
@@ -36,6 +51,19 @@ cmc cluster status simple
 
 ---
 
+## Cluster Profiles
+
+The tool provides different profiles to simulate various HPC environments. Each profile consists of a set of Dockerfiles, Compose files, and Slurm configurations.
+
+| Profile | Description | Key Features |
+| :--- | :--- | :--- |
+| `simple` | Standard Slurm setup | Basic scheduler, 1 controller, N nodes |
+| `preemptive` | Preemption-capable setup | High/Low priority jobs, preemption logic |
+
+When a profile is selected, all accompanying scripts (e.g., `high_job.sh`, `low_job.sh` in the `preemptive` profile) are automatically copied to your cluster root.
+
+---
+
 ## Cluster Management Tool (cmc)
 
 The `cmc cluster` tool wraps Docker Compose to provide a simplified interface for cluster administration. Most commands accept an optional `<cluster_name>` to target a specific cluster configuration.
@@ -44,6 +72,7 @@ The `cmc cluster` tool wraps Docker Compose to provide a simplified interface fo
 
 | Command | Description | Usage Example |
 | :--- | :--- | :--- |
+| `init list` | Lists available cluster profiles | `cmc cluster init list` |
 | `init` | Initializes project files with variable support | `cmc cluster init simple N=3` |
 | `start` | Starts the controller and compute nodes | `cmc cluster start simple` |
 | `stop` | Stops all cluster containers | `cmc cluster stop simple` |
@@ -60,6 +89,11 @@ The `cmc cluster` tool wraps Docker Compose to provide a simplified interface fo
 ---
 
 ## Operational Guide
+
+### Container Environment
+To facilitate easy development and testing, the cluster root directory on your host is mounted to `/home/slurm` inside the containers. The container's default working directory is also set to `/home/slurm`. 
+
+This means that any script you add to the cluster root (e.g., `test_job.sh`) is immediately available inside the container.
 
 ### Job Lifecycle
 Use `cmc cluster login` to enter the controller node.
