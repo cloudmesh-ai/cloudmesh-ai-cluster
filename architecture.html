@@ -820,15 +820,15 @@
 <p>Configurations are stored by default in: <code>~/.config/cloudmesh/clusters/&lt;cluster_name&gt;/</code>. This allows you to manage multiple cluster profiles on one machine and switch between them simply by passing the name to <code>cmc</code> commands.</p>
 <h2 id="directory-structure">Directory Structure</h2>
 <h3 id="host-directory-cluster-root">Host Directory (Cluster Root)</h3>
-<pre><code class="language-text">. (Cluster Root)
-├── .env                # Project name and scaling (SLURM_NODES)
-├── docker-compose.yml  # Service orchestration
-├── Dockerfile          # Build definition
-├── entrypoint.sh       # Setup script
-├── test_job.sh         # Smoke test batch script
-└── config/
-    └── slurm.conf      # Generated Slurm configuration
-</code></pre>
+<div class="highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>. (Cluster Root)
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>├── .env                # Project name and scaling (SLURM_NODES)
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>├── docker-compose.yml  # Service orchestration
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>├── Dockerfile          # Build definition
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>├── entrypoint.sh       # Setup script
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>├── test_job.sh         # Smoke test batch script
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>└── config/
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    └── slurm.conf      # Generated Slurm configuration
+</span></code></pre></div>
 <h3 id="container-environment">Container Environment</h3>
 <p>To provide seamless access to scripts and data, the entire cluster root directory is mounted inside the containers:
 - <strong>Mount Path</strong>: <code>/home/slurm</code>

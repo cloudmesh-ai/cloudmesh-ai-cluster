@@ -960,29 +960,29 @@
 <p>The <code>cmc cluster init</code> command prepares your environment. It supports dynamic profile resolution and variable replacement.</p>
 <p><strong>Exploring Profiles:</strong>
 Before initializing, you can list the available cluster configurations:</p>
-<pre><code class="language-bash">cmc cluster init list
-</code></pre>
+<div class="highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>cmc<span class="w"> </span>cluster<span class="w"> </span>init<span class="w"> </span>list
+</span></code></pre></div>
 <p><strong>Basic Initialization:</strong>
 Initialize a cluster using the default <code>simple</code> profile:</p>
-<pre><code class="language-bash">cmc cluster init simple
-</code></pre>
+<div class="highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>cmc<span class="w"> </span>cluster<span class="w"> </span>init<span class="w"> </span>simple
+</span></code></pre></div>
 <p><strong>Profile-Based Initialization:</strong>
 Initialize a cluster using a specific profile (e.g., <code>preemptive</code>) by using its name as the cluster name.</p>
-<pre><code class="language-bash">cmc cluster init preemptive
-</code></pre>
+<div class="highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>cmc<span class="w"> </span>cluster<span class="w"> </span>init<span class="w"> </span>preemptive
+</span></code></pre></div>
 <p><strong>Advanced Initialization with Scaling and Variables:</strong>
 You can pass variables (e.g., node count <code>N</code>) directly to the command. These variables are used to generate the <code>slurm.conf</code> from a template.</p>
-<pre><code class="language-bash">cmc cluster init preemptive N=3
-</code></pre>
+<div class="highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>cmc<span class="w"> </span>cluster<span class="w"> </span>init<span class="w"> </span>preemptive<span class="w"> </span><span class="nv">N</span><span class="o">=</span><span class="m">3</span>
+</span></code></pre></div>
 <h3 id="launching-the-cluster">Launching the Cluster</h3>
 <p>Bring the cluster online:</p>
-<pre><code class="language-bash">cmc cluster start
-</code></pre>
+<div class="highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>cmc<span class="w"> </span>cluster<span class="w"> </span>start
+</span></code></pre></div>
 <p><em>(If you omit the cluster name, it uses the current directory's configuration).</em></p>
 <h3 id="verifying-system-health">Verifying System Health</h3>
 <p>Ensure all compute nodes are active and the Slurm scheduler is responsive:</p>
-<pre><code class="language-bash">cmc cluster status simple
-</code></pre>
+<div class="highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>cmc<span class="w"> </span>cluster<span class="w"> </span>status<span class="w"> </span>simple
+</span></code></pre></div>
 <hr />
 <h2 id="cluster-profiles">Cluster Profiles</h2>
 <p>The tool provides different profiles to simulate various HPC environments. Each profile consists of a set of Dockerfiles, Compose files, and Slurm configurations.</p>
@@ -1098,23 +1098,23 @@ You can pass variables (e.g., node count <code>N</code>) directly to the command
 <ol>
 <li><strong>Submit a Job</strong>:</li>
 </ol>
-<p><code>bash
-   sbatch test_job.sh</code></p>
+<div class="highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>sbatch<span class="w"> </span>test_job.sh
+</span></code></pre></div>
 <ol>
 <li><strong>Monitor Jobs</strong>:</li>
 </ol>
-<p><code>bash
-   squeue</code></p>
+<div class="highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>squeue
+</span></code></pre></div>
 <ol>
 <li><strong>Cancel Jobs</strong>:</li>
 </ol>
-<p><code>bash
-   scancel &lt;job_id&gt;</code></p>
+<div class="highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>scancel<span class="w"> </span>&lt;job_id&gt;
+</span></code></pre></div>
 <h3 id="scaling-the-cluster">Scaling the Cluster</h3>
 <p>Scaling is now handled during initialization. Pass the <code>N</code> variable to specify the number of worker nodes:</p>
-<pre><code class="language-bash">cmc cluster init simple N=5
-cmc cluster start simple
-</code></pre>
+<div class="highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>cmc<span class="w"> </span>cluster<span class="w"> </span>init<span class="w"> </span>simple<span class="w"> </span><span class="nv">N</span><span class="o">=</span><span class="m">5</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>cmc<span class="w"> </span>cluster<span class="w"> </span>start<span class="w"> </span>simple
+</span></code></pre></div>
 <p>The tool automatically configures <code>SLURM_NODES</code> in the <code>.env</code> file and applies <code>--scale node=N</code> during startup.</p>
 <hr />
 <h2 id="troubleshooting">Troubleshooting</h2>

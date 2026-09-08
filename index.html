@@ -597,31 +597,31 @@
 <ol>
 <li><strong>Explore available profiles</strong>:</li>
 </ol>
-<p><code>bash
-   cmc cluster init list</code></p>
+<div class="highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>cmc<span class="w"> </span>cluster<span class="w"> </span>init<span class="w"> </span>list
+</span></code></pre></div>
 <ol>
 <li><strong>Initialize the cluster</strong>:
    You can use a profile name as the cluster name to apply specific configurations (e.g., <code>preemptive</code>).</li>
 </ol>
-<p><code>bash
-   cmc cluster init simple N=3
-   # OR use a specific profile:
-   cmc cluster init preemptive N=3</code></p>
+<div class="highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>cmc<span class="w"> </span>cluster<span class="w"> </span>init<span class="w"> </span>simple<span class="w"> </span><span class="nv">N</span><span class="o">=</span><span class="m">3</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="c1"># OR use a specific profile:</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>cmc<span class="w"> </span>cluster<span class="w"> </span>init<span class="w"> </span>preemptive<span class="w"> </span><span class="nv">N</span><span class="o">=</span><span class="m">3</span>
+</span></code></pre></div>
 <ol>
 <li><strong>Start the containers</strong>:</li>
 </ol>
-<p><code>bash
-   cmc cluster start</code></p>
+<div class="highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>cmc<span class="w"> </span>cluster<span class="w"> </span>start
+</span></code></pre></div>
 <ol>
 <li><strong>Verify health</strong>:</li>
 </ol>
-<p><code>bash
-   cmc cluster status</code></p>
+<div class="highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>cmc<span class="w"> </span>cluster<span class="w"> </span>status
+</span></code></pre></div>
 <ol>
 <li><strong>Run a smoke test</strong>:</li>
 </ol>
-<p><code>bash
-   cmc cluster test</code></p>
+<div class="highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>cmc<span class="w"> </span>cluster<span class="w"> </span><span class="nb">test</span>
+</span></code></pre></div>
 <p>For more detailed information, please see the <a href="architecture.html">Architecture</a> and <a href="usage.html">Usage Guide</a>.</p>
 
 
